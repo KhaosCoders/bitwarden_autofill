@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Bitwarden_Autofill (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Bitwarden_Autofill (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
