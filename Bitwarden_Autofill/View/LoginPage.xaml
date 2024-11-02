@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page x:Class="Bitwarden_Autofill.View.LoginPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Bitwarden_Autofill.View"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+
+    <Grid Style="{StaticResource styPageGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Style="{StaticResource styHeadline}">
+                <Bold>bit</Bold><Run FontWeight="Normal">warden</Run>
+            </TextBlock>
+            <Line Style="{StaticResource stySeparator}" />
+            <TextBlock Style="{StaticResource stySubHeadline}">
+                Login via your API Key for bitwarden CLI.<LineBreak />
+                You can find it&#160;<Hyperlink Click="SecurityKeysLink_Click">in your account</Hyperlink>
+            </TextBlock>
+            <Line Style="{StaticResource stySeparator}" />
+
+            <TextBlock Style="{StaticResource styInputLabel}">
+                Client-ID:
+            </TextBlock>
+            <TextBox x:Name="ClientIdTextbox" Text="{x:Bind ViewModel.ClientId, Mode=TwoWay}" />
+            <Line Style="{StaticResource stySeparator}" />
+
+            <TextBlock Style="{StaticResource styInputLabel}">
+                Client-Secret:
+            </TextBlock>
+            <PasswordBox Password="{x:Bind ViewModel.ClientSecret, Mode=TwoWay}" />
+            <Line Style="{StaticResource stySeparator}" />
+
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="0,0,8,0" VerticalAlignment="Center">
+                    Connect to:
+                </TextBlock>
+                <ComboBox ItemsSource="{x:Bind ViewModel.Servers}" SelectedIndex="{x:Bind ViewModel.SelectedServerIndex, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource styCbo}" />
+            </StackPanel>
+            <Line Style="{StaticResource stySeparator}" />
+            <TextBlock Style="{StaticResource styValidation}" Text="{x:Bind ViewModel.ValidationError, Mode=OneWay}" />
+        </StackPanel>
+        <Button Grid.Row="1"
+                HorizontalAlignment="Center"
+                Click="Connect_Click"
+                Style="{StaticResource styButton}">
+            Connect
+        </Button>
+    </Grid>
+
+</Page>

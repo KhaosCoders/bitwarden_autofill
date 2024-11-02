@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page x:Class="Bitwarden_Autofill.View.UnlockPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="using:Bitwarden_Autofill.View"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+
+    <Grid Style="{StaticResource styPageGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel>
+            <TextBlock Style="{StaticResource styHeadline}">
+                <Bold>bit</Bold><Run FontWeight="Normal">warden</Run>
+            </TextBlock>
+            <Line Style="{StaticResource stySeparator}" />
+            <TextBlock Style="{StaticResource stySubHeadline}">
+                Your vault is locked
+            </TextBlock>
+            <Line Style="{StaticResource stySeparator}" />
+        </StackPanel>
+        <StackPanel Grid.Row="1" VerticalAlignment="Center">
+            <TextBlock Style="{StaticResource styInputLabel}">
+                Password:
+            </TextBlock>
+            <PasswordBox x:Name="PasswordTextbox" KeyDown="PasswordKeyDown" Password="{x:Bind ViewModel.Password, Mode=TwoWay}" />
+
+            <TextBlock Style="{StaticResource styValidation}" Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}" />
+        </StackPanel>
+        <Button Grid.Row="2"
+                HorizontalAlignment="Center"
+                Click="Unlock_Click"
+                Style="{StaticResource styButton}">
+            Unlock
+        </Button>
+    </Grid>
+</Page>

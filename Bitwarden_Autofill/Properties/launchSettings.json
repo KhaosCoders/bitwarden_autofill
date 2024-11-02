@@ -1,10 +1,12 @@
 {
   "profiles": {
     "Bitwarden_Autofill (Package)": {
-      "commandName": "MsixPackage"
+      "commandName": "MsixPackage",
+      "commandLineArgs": "--autorun"
     },
     "Bitwarden_Autofill (Unpackaged)": {
-      "commandName": "Project"
+      "commandName": "Project",
+      "commandLineArgs": "--autorun"
     }
   }
 }

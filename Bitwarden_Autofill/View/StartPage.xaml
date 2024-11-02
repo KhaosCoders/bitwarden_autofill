@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Page x:Class="Bitwarden_Autofill.View.StartPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:controls="using:Bitwarden_Autofill.Controls"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:view="using:Bitwarden_Autofill.View"
+      Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+      mc:Ignorable="d">
+
+    <Grid Style="{StaticResource styPageGrid}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <FlipView x:Name="Gallery"
+                  Grid.Row="0"
+                  FocusVisualPrimaryThickness="0"
+                  FocusVisualSecondaryThickness="0">
+            <Grid Style="{StaticResource styFlipPageGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Style="{StaticResource styHeadline}">
+                        bitwarden
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource stySubHeadline}">
+                        Autofill
+                    </TextBlock>
+                    <Line Margin="0,30,0,30" Style="{StaticResource stySeparator}" />
+                    <TextBlock HorizontalTextAlignment="Center" TextWrapping="WrapWholeWords">
+                        The easy way to input your credentials into any Windows app.
+                    </TextBlock>
+                </StackPanel>
+                <Button Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        Click="FirstButton_Click"
+                        Content="Next" />
+            </Grid>
+            <Grid Style="{StaticResource styFlipPageGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Style="{StaticResource styHeadline}">
+                        Global Hotkey
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource stySubHeadline}">
+                        Select your hotkey combo to bring up the selector whenever, whereever.<LineBreak /><LineBreak />
+                        Just hit the hotkey you want to use.</TextBlock>
+                    <Line Style="{StaticResource stySeparator}" />
+                </StackPanel>
+                <StackPanel Grid.Row="1" Margin="12,0" VerticalAlignment="Center">
+                    <TextBlock Style="{StaticResource styInputLabel}">
+                        Hotkey:
+                    </TextBlock>
+                    <controls:HotkeySelector x:Name="HotkeySelector" Text="{x:Bind ViewModel.GlobalHotkey, Mode=TwoWay}" />
+                    <Line Style="{StaticResource stySeparator}" />
+                    <TextBlock Style="{StaticResource styValidation}" Text="{x:Bind HotkeySelector.Warning, Mode=OneWay}" />
+                </StackPanel>
+                <Button Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        Click="SecondButton_Click"
+                        Content="Next" />
+            </Grid>
+            <Grid Style="{StaticResource styFlipPageGrid}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <StackPanel Grid.Row="0">
+                    <TextBlock Style="{StaticResource styHeadline}">
+                        Autorun
+                    </TextBlock>
+                    <TextBlock Style="{StaticResource stySubHeadline}">
+                        Make sure the app starts with Windows for the best experience.
+                    </TextBlock>
+                    <Line Style="{StaticResource stySeparator}" />
+                </StackPanel>
+                <ToggleSwitch Grid.Row="1"
+                              Margin="12,0"
+                              VerticalAlignment="Center"
+                              IsOn="{x:Bind ViewModel.IsAutorunEnabled, Mode=TwoWay}"
+                              OffContent="Autorun off"
+                              OnContent="Start with Windows" />
+                <Line Style="{StaticResource stySeparator}" />
+                <TextBlock Style="{StaticResource styValidation}" Text="{x:Bind ViewModel.AutorunError, Mode=OneWay}" />
+                <Button Grid.Row="2"
+                        HorizontalAlignment="Center"
+                        Click="StartButton_Click"
+                        Content="Start App" />
+            </Grid>
+        </FlipView>
+
+        <PipsPager Grid.Row="1"
+                   Margin="0,12,0,0"
+                   HorizontalAlignment="Center"
+                   NumberOfPages="{x:Bind Path=Gallery.Items.Count}"
+                   SelectedPageIndex="{x:Bind Path=Gallery.SelectedIndex, Mode=TwoWay}" />
+    </Grid>
+</Page>

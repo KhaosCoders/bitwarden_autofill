@@ -5,6 +5,7 @@
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
+  xmlns:desktop="http://schemas.microsoft.com/appx/manifest/desktop/windows10"
   IgnorableNamespaces="uap rescap">
 
   <Identity
@@ -34,14 +35,20 @@
       Executable="$targetnametoken$.exe"
       EntryPoint="$targetentrypoint$">
       <uap:VisualElements
-        DisplayName="Bitwarden_Autofill"
-        Description="Bitwarden_Autofill"
+        DisplayName="Bitwarden Autofill"
+        Description="Bitwarden Autofill"
         BackgroundColor="transparent"
         Square150x150Logo="Assets\Square150x150Logo.png"
         Square44x44Logo="Assets\Square44x44Logo.png">
         <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" />
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
+      <Extensions>
+        <desktop:Extension Category="windows.startupTask"
+                           Executable="Bitwarden_Autofill.exe" a:Parameters="--autorun" xmlns:a="http://schemas.microsoft.com/appx/manifest/uap/windows10/10" EntryPoint="Windows.FullTrustApplication">
+          <desktop:StartupTask TaskId="Bitwarden_Autofill" Enabled="false" DisplayName="Bitwarden Autofill" />
+        </desktop:Extension>
+      </Extensions>
     </Application>
   </Applications>
 

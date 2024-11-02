@@ -2,7 +2,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # 17
 VisualStudioVersion = 17.11.35327.3
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bitwarden_Autofill", "Bitwarden_Autofill.csproj", "{1C20E867-DDB4-494F-B480-A76C53FD5B4F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bitwarden_Autofill", "Bitwarden_Autofill.csproj", "{1C20E867-DDB4-494F-B480-A76C53FD5B4F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{CD17203B-49A2-40E9-BC2D-EAD2CB1A2584}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.xamlstyler = .xamlstyler
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
