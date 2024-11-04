@@ -15,7 +15,7 @@ namespace Bitwarden_Autofill.View;
 /// <summary>
 /// A page that allows the user to select an item from a list of search results.
 /// </summary>
-internal sealed partial class SelectItemPage : Page
+internal sealed partial class SelectItemPage : Page, IPageWithSearch
 {
     public SelectItemPage(SearchFlow searchFlow, PasswordFlow passwordFlow)
     {
