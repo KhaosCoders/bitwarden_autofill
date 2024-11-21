@@ -27,6 +27,7 @@ internal sealed partial class SelectItemPage : Page, IPageWithSearch
             UsernameCommand = UsernameClickedCommand,
             PasswordCommand = PasswordClickedCommand,
             TotpCommand = TotpClickedCommand,
+            ToggleLinkCommand = ToggleLinkCommand,
         };
         ViewModel.ItemSelected += ViewModel_ItemSelected;
         InitializeComponent();
@@ -83,6 +84,12 @@ internal sealed partial class SelectItemPage : Page, IPageWithSearch
         {
             InputText(totp);
         }
+    }
+
+    [RelayCommand]
+    private void OnToggleLink(BitwardenItem? item)
+    {
+        // TODO: Toggle Link
     }
 
     private void InputText(string text)

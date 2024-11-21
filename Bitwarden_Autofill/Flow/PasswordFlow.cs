@@ -42,7 +42,7 @@ internal class PasswordFlow(
     public Task ContinueAfterUnlockAsync()
     {
         dispatcher.IndicateLoading();
-        return DisplayPasswordsForProcessAsync();
+        return DisplayPasswordsForProcessAsync(targetProcessFileName);
     }
 
     public void EnterCredentials(BitwardenItem item)
@@ -74,11 +74,12 @@ internal class PasswordFlow(
         }
     }
 
-    private async Task DisplayPasswordsForProcessAsync()
+    private async Task DisplayPasswordsForProcessAsync(string targetProcess = "")
     {
         var foundItems = await api.FindItemsForUri(ProcessUri);
         dispatcher.ShowPage<SelectItemPage>(page =>
         {
+            page.ViewModel.AttachedProcess = targetProcess;
             page.ViewModel.Items.Clear();
             foreach (var item in foundItems)
             {

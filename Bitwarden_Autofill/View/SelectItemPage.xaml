@@ -7,11 +7,15 @@
       xmlns:local="using:Bitwarden_Autofill.View"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:models="using:Bitwarden_Autofill.API.Models"
+      xmlns:wr="using:WinUI.Redemption"
       x:Name="page"
       Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
       mc:Ignorable="d">
     <Page.Resources>
         <conv:NotEmptyConverter x:Key="convNotEmpty" />
+        <conv:StringToVisibilityConverter x:Key="convStringNotEmpty" />
+        <conv:AttachedProcessConverter x:Key="convAttachProcessVis" />
+        <conv:AttachedProcessConverter x:Key="convAttachProcessCol" Invert="True" />
     </Page.Resources>
 
     <Grid Style="{StaticResource styPageGrid}">
@@ -70,6 +74,30 @@
                                     ToolTipService.ToolTip="Click: Input the verification token into the target process.&#x0a;Hold CTRL + Click: Copy the verification token to the clipboard.">
                                 <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE823;" />
                             </Button>
+                            <StackPanel Margin="8,0,0,0" Orientation="Horizontal" Visibility="{Binding ViewModel.AttachedProcess, ElementName=page, Converter={StaticResource convStringNotEmpty}}">
+                                <Button Command="{Binding ViewModel.ToggleLinkCommand, ElementName=page}" CommandParameter="{x:Bind}" ToolTipService.ToolTip="Unpin login from target process.">
+                                    <wr:MultiBinding.MultiBindings>
+                                        <wr:MultiBindingCollection>
+                                            <wr:MultiBinding Converter="{StaticResource convAttachProcessVis}" PropertyName="Visibility">
+                                                <wr:MultiBindingSource Binding="{Binding ViewModel.AttachedProcess, ElementName=page}" />
+                                                <wr:MultiBindingSource Binding="{Binding}" />
+                                            </wr:MultiBinding>
+                                        </wr:MultiBindingCollection>
+                                    </wr:MultiBinding.MultiBindings>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE77A;" />
+                                </Button>
+                                <Button Command="{Binding ViewModel.ToggleLinkCommand, ElementName=page}" CommandParameter="{x:Bind}" ToolTipService.ToolTip="Pin login to target process.">
+                                    <wr:MultiBinding.MultiBindings>
+                                        <wr:MultiBindingCollection>
+                                            <wr:MultiBinding Converter="{StaticResource convAttachProcessCol}" PropertyName="Visibility">
+                                                <wr:MultiBindingSource Binding="{Binding ViewModel.AttachedProcess, ElementName=page}" />
+                                                <wr:MultiBindingSource Binding="{Binding}" />
+                                            </wr:MultiBinding>
+                                        </wr:MultiBindingCollection>
+                                    </wr:MultiBinding.MultiBindings>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE840;" />
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
