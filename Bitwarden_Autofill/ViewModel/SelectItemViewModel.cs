@@ -7,9 +7,6 @@ namespace Bitwarden_Autofill.ViewModel;
 
 internal partial class SelectItemViewModel : ObservableObject
 {
-	[ObservableProperty]
-	private string search = string.Empty;
-
 	public ObservableCollection<BitwardenItem> Items { get; } = [];
 
 	[ObservableProperty]
@@ -22,16 +19,8 @@ internal partial class SelectItemViewModel : ObservableObject
     public delegate void ItemSelectedEventHandler(BitwardenItem? item);
     public event ItemSelectedEventHandler? ItemSelected;
 
-    public delegate void SearchChanged(string text);
-    public event SearchChanged? SearchTextChanged;
-
     partial void OnSelectedItemChanged(BitwardenItem? value)
     {
         ItemSelected?.Invoke(value);
-    }
-
-    partial void OnSearchChanged(string value)
-    {
-        SearchTextChanged?.Invoke(value);
     }
 }

@@ -2,4 +2,5 @@
 
 internal interface IPageWithSearch
 {
+    void SearchTextChanged(string text);
 }

@@ -109,9 +109,11 @@ internal class UIDispatcher(DispatcherQueue dispatcher, IServiceProvider service
         Dispatch(window.Close);
     }
 
-    public void OpenMainWindow()
+    public void OpenMainWindow(string attachedProcess = "")
     {
         _mainWindow ??= OpenWindow<MainWindow>();
+
+        Dispatch(() => _mainWindow.ViewModel.Process = attachedProcess);
 
         if (_mainWindow?.Visible == false)
         {

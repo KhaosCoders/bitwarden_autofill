@@ -9,4 +9,7 @@ internal partial class MainWindowViewModel : ObservableObject
 
     [ObservableProperty]
     private string edition = string.Empty;
+
+    [ObservableProperty]
+    private string process = string.Empty;
 }

@@ -29,7 +29,6 @@ internal sealed partial class SelectItemPage : Page, IPageWithSearch
             TotpCommand = TotpClickedCommand,
         };
         ViewModel.ItemSelected += ViewModel_ItemSelected;
-        ViewModel.SearchTextChanged += ViewModel_SearchTextChanged;
         InitializeComponent();
     }
 
@@ -40,7 +39,7 @@ internal sealed partial class SelectItemPage : Page, IPageWithSearch
 
     private CancellationTokenSource? cancellationTokenSource;
 
-    private void ViewModel_SearchTextChanged(string text)
+    public void SearchTextChanged(string text)
     {
         cancellationTokenSource?.Cancel();
         cancellationTokenSource = new();

@@ -41,7 +41,8 @@
                             MaxWidth="600"
                             VerticalAlignment="Center"
                             PlaceholderText="Search"
-                            QueryIcon="Find" />
+                            QueryIcon="Find"
+                            TextChanged="TitleBarSearchBox_TextChanged" />
             <PersonPicture x:Name="PersonPic"
                            Grid.Column="6"
                            Height="32"
@@ -58,6 +59,10 @@
             </Grid.ColumnDefinitions>
 
             <TextBlock Grid.Column="0" Style="{StaticResource styStatusBarText}" Text="{x:Bind ViewModel.Edition}" />
+            <TextBlock Grid.Column="1"
+                       HorizontalAlignment="Center"
+                       Style="{StaticResource styStatusBarText}"
+                       Text="{x:Bind ViewModel.Process, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
             <TextBlock Grid.Column="2" Style="{StaticResource styStatusBarText}" Text="{x:Bind ViewModel.Version}" />
         </Grid>
     </Grid>

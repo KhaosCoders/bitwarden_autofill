@@ -25,7 +25,7 @@ internal class PasswordFlow(
         targetProcessFileName = Path.GetFileName(targetProcessPath) ?? string.Empty;
 
         // Show loading page
-        dispatcher.OpenMainWindow();
+        dispatcher.OpenMainWindow(targetProcessFileName);
         desktopManager.MoveMainWindowInProximityOfFocusedControl();
         dispatcher.IndicateLoading();
 

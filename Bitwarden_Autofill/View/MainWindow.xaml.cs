@@ -49,12 +49,12 @@ internal sealed partial class MainWindow : Window
 
         CenterWindowOnScreen();
 
-        InitializeComponent();
         ViewModel = new()
         {
             Version = $"v{(System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0")}",
             Edition = "Free (beta)"
         };
+        InitializeComponent();
 
         Closed += MainWindow_Closed;
         appWindow.Changed += AppWindow_Changed;
@@ -217,4 +217,7 @@ internal sealed partial class MainWindow : Window
             }
         }
     }
+
+    private void TitleBarSearchBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args) =>
+        (CurrentPage as IPageWithSearch)?.SearchTextChanged(sender.Text);
 }
