@@ -174,7 +174,7 @@ public class MultiBinding
     {
         if (_Bindings?.Any() != true)
             throw new InvalidOperationException($"At least one {nameof(MultiBindingSource)} is required.");
-        if (this.Converter == null)
+        if (Converter == null)
             throw new InvalidOperationException($"A {nameof(IMultiValueConverter)} is required.");
         foreach (var binding in _Bindings)
         {
@@ -223,7 +223,7 @@ public class MultiBinding
                 if (_FinalValue == value)
                     return;
                 _FinalValue = value;
-                this.PropertyChanged?.Invoke(
+                PropertyChanged?.Invoke(
                     this,
                     new PropertyChangedEventArgs(nameof(FinalValue)));
             }
@@ -245,14 +245,14 @@ public class MultiBinding
         {
             _isApplying = true;
 
-            if (!_proxiesUsed.TryGetValue(this.Target, out var count))
+            if (!_proxiesUsed.TryGetValue(Target, out var count))
             {
                 count = new ProxyCount();
-                _proxiesUsed.Add(this.Target, count);
+                _proxiesUsed.Add(Target, count);
             }
 
-            this.Proxies = new MultiBindingProxy[this.MultiBinding.Bindings.Count];
-            this.ProxyValues = new object[this.MultiBinding.Bindings.Count];
+            Proxies = new MultiBindingProxy[MultiBinding.Bindings.Count];
+            ProxyValues = new object[MultiBinding.Bindings.Count];
 
             for (int i = 0; i < MultiBinding.Bindings.Count; i++)
             {
@@ -264,7 +264,7 @@ public class MultiBinding
                     Index = i,
                 };
                 BindingOperations.SetBinding(
-                    this.Target,
+                    Target,
                     proxy.ProxyProperty,
                     new Binding
                     {
@@ -282,14 +282,14 @@ public class MultiBinding
                         Converter = new MultiBindingProxyConverter(this, proxy),
                         ConverterParameter = null
                     });
-                this.Proxies[i] = proxy;
+                Proxies[i] = proxy;
             }
 
             _isApplying = false;
             Reevaluate();
             BindingOperations.SetBinding(
-                this.Target,
-                this.TargetProperty,
+                Target,
+                TargetProperty,
                 new Binding
                 {
                     Source = this,
@@ -302,36 +302,36 @@ public class MultiBinding
             // target is loaded but also ensures the expression isn't GC'd until
             // after the FE is unloaded. (Assuming bindings in WinUI are weak refs,
             // which I don't actually know, but anyway...).
-            this.Target.Loaded += this.OnTargetLoaded;
-            this.Target.Unloaded += this.OnTargetUnloaded;
+            Target.Loaded += OnTargetLoaded;
+            Target.Unloaded += OnTargetUnloaded;
         }
 
         internal void Reevaluate()
         {
-            if (_isApplying || this.Target?.IsLoaded != true)
+            if (_isApplying || Target?.IsLoaded != true)
                 return;
-            this.FinalValue = this.MultiBinding.Converter.Convert(
-                this.ProxyValues,
-                this.MultiBinding.ConverterParameter);
+            FinalValue = MultiBinding.Converter.Convert(
+                ProxyValues,
+                MultiBinding.ConverterParameter);
         }
 
         private void OnTargetLoaded(object sender, RoutedEventArgs e)
         {
-            this.Reevaluate();
+            Reevaluate();
         }
 
         private void OnTargetUnloaded(object sender, RoutedEventArgs e)
         {
-            this.Unapply();
+            Unapply();
         }
 
         private void Unapply()
         {
             // There's no need to do anything else because all the
             // bindings will just go away on their own.
-            this.Target.Loaded -= this.OnTargetLoaded;
-            this.Target.Unloaded -= this.OnTargetUnloaded;
-            this.Target = null;
+            Target.Loaded -= OnTargetLoaded;
+            Target.Unloaded -= OnTargetUnloaded;
+            Target = null;
         }
 
         private static DependencyProperty GetProxyProperty(int i)

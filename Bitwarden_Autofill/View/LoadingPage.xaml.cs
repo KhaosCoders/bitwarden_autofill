@@ -9,6 +9,6 @@ internal sealed partial class LoadingPage : Page
 {
     public LoadingPage()
     {
-        this.InitializeComponent();
+        InitializeComponent();
     }
 }

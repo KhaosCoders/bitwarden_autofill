@@ -24,7 +24,7 @@ internal class UIDispatcher(DispatcherQueue dispatcher, IServiceProvider service
 
     public void Dispatch(Action a)
     {
-        DispatcherQueueHandler action = () =>
+        void run()
         {
             try
             {
@@ -35,15 +35,15 @@ internal class UIDispatcher(DispatcherQueue dispatcher, IServiceProvider service
                 Log.Fatal(e, "Unhandled Exception on dispatcher");
                 throw;
             }
-        };
+        }
 
         if (Environment.CurrentManagedThreadId == 1)
         {
-            action.Invoke();
+            run();
         }
         else
         {
-            _dispatcherQueue.TryEnqueue(action);
+            _dispatcherQueue.TryEnqueue(run);
         }
 
     }

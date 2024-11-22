@@ -20,6 +20,8 @@ internal sealed partial class UnlockPage : Page
 
         ViewModel = new();
         InitializeComponent();
+
+        Loaded += OnLoaded;
     }
 
     private readonly BitwardenApi _api;
@@ -28,7 +30,7 @@ internal sealed partial class UnlockPage : Page
 
     public UnlockViewModel ViewModel { get; set; }
 
-    private void LoginPage_Loaded(object sender, RoutedEventArgs e)
+    private void OnLoaded(object sender, RoutedEventArgs e)
     {
         PasswordTextbox.Focus(FocusState.Programmatic);
     }

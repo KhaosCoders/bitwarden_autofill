@@ -10,7 +10,7 @@ internal sealed partial class ErrorPage : Page
 {
     public ErrorPage()
     {
-        this.InitializeComponent();
+        InitializeComponent();
         ViewModel = new();
     }
 

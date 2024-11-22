@@ -20,23 +20,26 @@ internal sealed partial class LoginPage : Page
         _dispatcher = dispatcher;
         _cli = cli;
 
-        this.InitializeComponent();
+        InitializeComponent();
         ViewModel = new();
-        ReadCliServer();
+        LoadConnectedServerConfig();
 
-        Loaded += LoginPage_Loaded;
+        Loaded += OnLoaded;
     }
 
     private readonly AppFlow _flow;
     private readonly UIDispatcher _dispatcher;
     private readonly BitwardenCli _cli;
 
-    private void LoginPage_Loaded(object sender, RoutedEventArgs e)
+    public LoginViewModel ViewModel { get; set; }
+
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
     {
         ClientIdTextbox.Focus(FocusState.Programmatic);
     }
 
-    private void ReadCliServer()
+    private void LoadConnectedServerConfig()
     {
         Task.Run(async () =>
         {
@@ -72,8 +75,6 @@ internal sealed partial class LoginPage : Page
             });
         }).LogErrors();
     }
-
-    public LoginViewModel ViewModel { get; set; }
 
     private void SecurityKeysLink_Click(Hyperlink sender, HyperlinkClickEventArgs args)
     {

@@ -42,35 +42,33 @@ internal static class KeyboardInputSimulator
 
         List<INPUT> inputs = [];
 
-        var keydown =
-            (ushort keycode) =>
-                inputs.Add(new INPUT
+        void keydown(ushort keycode) =>
+            inputs.Add(new INPUT
+            {
+                type = INPUT_KEYBOARD,
+                u = new InputUnion
                 {
-                    type = INPUT_KEYBOARD,
-                    u = new InputUnion
+                    ki = new KEYBDINPUT
                     {
-                        ki = new KEYBDINPUT
-                        {
-                            wVk = keycode,
-                            dwFlags = 0
-                        }
+                        wVk = keycode,
+                        dwFlags = 0
                     }
-                });
+                }
+            });
 
-        var keyup =
-            (ushort keycode) =>
-                inputs.Add(new INPUT
+        void keyup(ushort keycode) =>
+            inputs.Add(new INPUT
+            {
+                type = INPUT_KEYBOARD,
+                u = new InputUnion
                 {
-                    type = INPUT_KEYBOARD,
-                    u = new InputUnion
+                    ki = new KEYBDINPUT
                     {
-                        ki = new KEYBDINPUT
-                        {
-                            wVk = keycode,
-                            dwFlags = KEYEVENTF_KEYUP
-                        }
+                        wVk = keycode,
+                        dwFlags = KEYEVENTF_KEYUP
                     }
-                });
+                }
+            });
 
         if (shift) keydown(VK_SHIFT);
         if (ctrl) keydown(VK_CONTROL);

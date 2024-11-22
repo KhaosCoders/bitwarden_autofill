@@ -62,6 +62,7 @@ internal sealed partial class MainWindow : Window
         AppTitleBar.SizeChanged += AppTitleBar_SizeChanged;
         AppTitleBar.Loaded += AppTitleBar_Loaded;
 
+        // Try to extend the content into the title bar
         ExtendsContentIntoTitleBar = true;
         if (ExtendsContentIntoTitleBar == true)
         {
@@ -174,12 +175,12 @@ internal sealed partial class MainWindow : Window
         if (args.WindowActivationState == WindowActivationState.Deactivated)
         {
             TitleBarTextBlock.Foreground =
-                (SolidColorBrush)App.Current.Resources["WindowCaptionForegroundDisabled"];
+                (SolidColorBrush)Application.Current.Resources["WindowCaptionForegroundDisabled"];
         }
         else
         {
             TitleBarTextBlock.Foreground =
-                (SolidColorBrush)App.Current.Resources["WindowCaptionForeground"];
+                (SolidColorBrush)Application.Current.Resources["WindowCaptionForeground"];
         }
     }
 

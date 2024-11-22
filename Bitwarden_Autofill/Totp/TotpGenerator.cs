@@ -3,7 +3,6 @@ using System;
 
 namespace Bitwarden_Autofill.Totp;
 
-
 /// <summary>
 /// Provides methods to generate TOTP (Time-based One-Time Password) from a URI or a secret.
 /// </summary>

@@ -1,7 +1,6 @@
 using Bitwarden_Autofill.API.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using System.Runtime.Serialization;
 using System.Windows.Input;
 
 namespace Bitwarden_Autofill.ViewModel;

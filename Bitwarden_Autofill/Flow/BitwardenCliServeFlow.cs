@@ -7,15 +7,15 @@ internal class BitwardenCliServeFlow(BitwardenCli cli, BitwardenApi api, ClientF
 {
     public async Task<bool> StartServe()
     {
-        var result = await cli.StartBitwardenCliServerAsync();
+        var (Success, Port) = await cli.StartBitwardenCliServerAsync();
 
-        if (!result.Success)
+        if (!Success)
         {
             return false;
         }
 
         Log.Information("Bitwarden CLI server started.");
-        clientFactory.SetServiceUrl($"http://localhost:{result.Port}");
+        clientFactory.SetServiceUrl($"http://localhost:{Port}");
 
         return await api.TestApi();
     }

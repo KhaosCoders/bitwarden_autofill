@@ -102,7 +102,7 @@ internal class WinProcesses
 
             StringBuilder exeName = new(1024);
             var exeNameSize = exeName.Capacity;
-            QueryFullProcessImageName(hProcess, 0, exeName, ref exeNameSize);
+            _ = QueryFullProcessImageName(hProcess, 0, exeName, ref exeNameSize);
 
             Log.Debug("Process path: {ExeName}", exeName);
 
