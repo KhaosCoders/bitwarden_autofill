@@ -9,7 +9,6 @@ internal class AppFlow(
     UIDispatcher dispatcher,
     BitwardenCliDownloadFlow cliFlow,
     LoginFlow loginFlow,
-    BitwardenCliServeFlow serveFlow,
     PasswordFlow passwordFlow,
     GlobalHotkey hotkey)
 {
@@ -27,7 +26,7 @@ internal class AppFlow(
         // Just start background services in autorun mode
         if (autoRun && !await loginFlow.NeedsLogin())
         {
-            await StartBackgroundServices();
+            HookUpGlobalHotkeyHandler();
             return;
         }
 
@@ -39,27 +38,19 @@ internal class AppFlow(
         await loginFlow.ShowStartPageAfterLogin(this);
     }
 
-    public async Task ShowStartPageAsync()
+    public void ShowStartPage()
     {
         Log.Information("Showing app start page");
 
-        await StartBackgroundServices();
+        HookUpGlobalHotkeyHandler();
 
         // Show StartPage
         dispatcher.ShowPage<StartPage>();
     }
 
-    public async Task StartBackgroundServices()
+    public void HookUpGlobalHotkeyHandler()
     {
         Log.Information("Starting app services...");
-
-        // Start Bitwarden Serve
-        if (!await serveFlow.StartServe())
-        {
-            Log.Error("Failed to start Bitwarden Serve");
-            dispatcher.ShowError("Failed to start bitwarden cli serve API");
-            return;
-        }
 
         // Enable Global Hotkey
         hotkey.HotkeyPressed += OnGlobalHotkey;

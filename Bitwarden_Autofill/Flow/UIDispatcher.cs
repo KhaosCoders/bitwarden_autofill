@@ -109,16 +109,26 @@ internal class UIDispatcher(DispatcherQueue dispatcher, IServiceProvider service
         Dispatch(window.Close);
     }
 
+    public void CloseMainWindow()
+    {
+        if (_mainWindow?.Visible == true)
+        {
+            _mainWindow.Hide();
+        }
+    }
+
     public void OpenMainWindow(string attachedProcess = "")
     {
         _mainWindow ??= OpenWindow<MainWindow>();
 
-        Dispatch(() => _mainWindow.ViewModel.Process = attachedProcess);
+        Dispatch(() => {
+            _mainWindow.ViewModel.Process = attachedProcess;
 
-        if (_mainWindow?.Visible == false)
-        {
-            _mainWindow.Show();
-        }
+            if (_mainWindow?.Visible == false)
+            {
+                _mainWindow.Show();
+            }
+        });
 
         // Place main window on top
         Win.Win32Api.SetForegroundWindow(MainWindowHandle);

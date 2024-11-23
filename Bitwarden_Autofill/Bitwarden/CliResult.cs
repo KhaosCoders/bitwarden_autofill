@@ -1,4 +1,4 @@
-﻿namespace Bitwarden_Autofill.CLI;
+﻿namespace Bitwarden_Autofill.Bitwarden;
 
 /// <summary>
 /// Represents the result of a CLI command execution.

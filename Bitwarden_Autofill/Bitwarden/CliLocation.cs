@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Bitwarden_Autofill.CLI;
+namespace Bitwarden_Autofill.Bitwarden;
 
 /// <summary>
 /// Helps with finding bw.exe and adding it to the PATH.

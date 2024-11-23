@@ -1,4 +1,4 @@
-using Bitwarden_Autofill.CLI;
+using Bitwarden_Autofill.Bitwarden;
 using Bitwarden_Autofill.Flow;
 using Bitwarden_Autofill.ViewModel;
 using Microsoft.UI.Xaml;
@@ -14,11 +14,12 @@ namespace Bitwarden_Autofill.View;
 /// </summary>
 internal sealed partial class LoginPage : Page
 {
-    public LoginPage(AppFlow flow, UIDispatcher dispatcher, BitwardenCli cli)
+    public LoginPage(AppFlow flow, UIDispatcher dispatcher, CliConfigurator configurator, CliAuth auth)
     {
         _flow = flow;
         _dispatcher = dispatcher;
-        _cli = cli;
+        _configurator = configurator;
+        _auth = auth;
 
         InitializeComponent();
         ViewModel = new();
@@ -29,7 +30,8 @@ internal sealed partial class LoginPage : Page
 
     private readonly AppFlow _flow;
     private readonly UIDispatcher _dispatcher;
-    private readonly BitwardenCli _cli;
+    private readonly CliConfigurator _configurator;
+    private readonly CliAuth _auth;
 
     public LoginViewModel ViewModel { get; set; }
 
@@ -43,7 +45,7 @@ internal sealed partial class LoginPage : Page
     {
         Task.Run(async () =>
         {
-            if (await _cli.GetServerConfigAsync() is not string server)
+            if (await _configurator.GetConnectedServerAsync() is not string server)
             {
                 return;
             }
@@ -105,13 +107,13 @@ internal sealed partial class LoginPage : Page
             {
                 Log.Debug("Connecting to server: {Server}", server);
             }
-            await _cli.ConfigServer(server);
+            await _configurator.SetConnectedServer(server);
 
             // login to cli
-            var (Success, Error) = await _cli.LoginApiKey(ViewModel.ClientId, ViewModel.ClientSecret);
+            var (Success, Error) = await _auth.LoginApiKey(ViewModel.ClientId, ViewModel.ClientSecret);
             if (Success)
             {
-                await _flow.ShowStartPageAsync();
+                _flow.ShowStartPage();
             }
             else
             {

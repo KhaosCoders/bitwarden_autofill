@@ -3,7 +3,7 @@ using System.IO;
 using System.IO.Compression;
 using System.Net.Http;
 
-namespace Bitwarden_Autofill.CLI;
+namespace Bitwarden_Autofill.Bitwarden;
 
 /// <summary>
 /// Dowloads the bitwarden CLI and extracts it to the CliDirectory.

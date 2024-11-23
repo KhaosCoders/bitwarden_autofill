@@ -2,7 +2,7 @@
 using System;
 using System.Text.Json.Serialization;
 
-namespace Bitwarden_Autofill.CLI;
+namespace Bitwarden_Autofill.Bitwarden.Model;
 
 /// <summary>
 /// Represents the status of the Bitwarden CLI.

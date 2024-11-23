@@ -91,13 +91,6 @@ public class BitwardenApi(ClientFactory clientFactory)
         return default;
     }
 
-    public async Task<bool> TestApi()
-    {
-        RestRequest request = new("/status", Method.Get);
-        var response = await ExecuteAsync<string>(request);
-
-        return response != null && response.IsSuccessStatusCode;
-    }
 
     private async Task<RestResponse<T>?> ExecuteAsync<T>(RestRequest request)
     {

@@ -15,6 +15,8 @@ internal sealed partial class StartPage : Page
     public StartPage(UIDispatcher dispatcher, IOptionsSnapshot<AppSettings> options, ISettingsStore settingsStore)
     {
         _settingsStore = settingsStore;
+        _dispatcher = dispatcher;
+
         var settings = options.Value;
         ViewModel = new(dispatcher)
         {
@@ -24,6 +26,7 @@ internal sealed partial class StartPage : Page
     }
 
     private readonly ISettingsStore _settingsStore;
+    private readonly UIDispatcher _dispatcher;
 
     public StartPageViewModel ViewModel { get; set; }
 
@@ -41,5 +44,6 @@ internal sealed partial class StartPage : Page
     private void StartButton_Click(object sender, RoutedEventArgs e)
     {
         _settingsStore.StoreGlobalHotkey(ViewModel.GlobalHotkey);
+        _dispatcher.CloseMainWindow();
     }
 }
