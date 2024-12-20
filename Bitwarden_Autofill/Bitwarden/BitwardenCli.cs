@@ -38,33 +38,40 @@ internal class BitwardenCli
             startInfo.Environment["BW_SESSION"] = _accessToken;
         }
 
-        var proc = Process.Start(startInfo);
-
-        if (proc == null) return new(false, string.Empty, "Unable to start bw process", 1);
-
-        if (timeout == default)
+        try
         {
-            await proc.WaitForExitAsync();
-        }
-        else
-        {
-            if (!proc.WaitForExit(timeout))
+            var proc = Process.Start(startInfo);
+
+            if (proc == null) return new(false, string.Empty, "Unable to start bw process", 1);
+
+            if (timeout == default)
             {
-                if (noExit)
-                {
-                    return new(true, string.Empty, string.Empty, -1);
-                }
-
-                Log.Warning("Process timed out, killing...");
-
-                proc.Kill();
-                return new(false, string.Empty, "Process timed out", 1);
+                await proc.WaitForExitAsync();
             }
+            else
+            {
+                if (!proc.WaitForExit(timeout))
+                {
+                    if (noExit)
+                    {
+                        return new(true, string.Empty, string.Empty, -1);
+                    }
+
+                    Log.Warning("Process timed out, killing...");
+
+                    proc.Kill();
+                    return new(false, string.Empty, "Process timed out", 1);
+                }
+            }
+
+            string output = await proc.StandardOutput.ReadToEndAsync();
+            string error = await proc.StandardError.ReadToEndAsync();
+
+            return new(proc.ExitCode == 0, output, error, proc.ExitCode);
         }
-
-        string output = await proc.StandardOutput.ReadToEndAsync();
-        string error = await proc.StandardError.ReadToEndAsync();
-
-        return new(proc.ExitCode == 0, output, error, proc.ExitCode);
+        catch (Exception ex)
+        {
+            return new(false, string.Empty, ex.Message, 1);
+        }
     }
 }

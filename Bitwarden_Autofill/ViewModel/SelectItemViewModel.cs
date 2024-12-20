@@ -1,4 +1,4 @@
-using Bitwarden_Autofill.API.Models;
+using Bitwarden_Autofill.Bitwarden.Model;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Windows.Input;

@@ -1,7 +1,7 @@
-﻿using Bitwarden_Autofill.API;
-using Bitwarden_Autofill.API.Models;
-using Bitwarden_Autofill.Win;
+﻿using Bitwarden_Autofill.Bitwarden;
+using Bitwarden_Autofill.Bitwarden.Model;
 using Bitwarden_Autofill.View;
+using Bitwarden_Autofill.Win;
 using System;
 using System.IO;
 
@@ -11,7 +11,8 @@ internal class PasswordFlow(
     UIDispatcher dispatcher,
     WinProcesses winProcesses,
     WindowPlacement desktopManager,
-    BitwardenApi api)
+    VaultLock vaultLock,
+    VaultSearch vaultSearch)
 {
     private string targetProcessFileName = string.Empty;
     private string ProcessUri => $"file://{targetProcessFileName}";
@@ -30,7 +31,7 @@ internal class PasswordFlow(
         dispatcher.IndicateLoading();
 
         // Unlock?
-        if (await IsLockedAsync())
+        if (await vaultLock.IsLockedAsync())
         {
             dispatcher.ShowPage<UnlockPage>();
             return;
@@ -76,7 +77,7 @@ internal class PasswordFlow(
 
     private async Task DisplayPasswordsForProcessAsync(string targetProcess = "")
     {
-        var foundItems = await api.FindItemsForUri(ProcessUri);
+        var foundItems = await vaultSearch.FindItemsForUri(ProcessUri);
         dispatcher.ShowPage<SelectItemPage>(page =>
         {
             page.ViewModel.AttachedProcess = targetProcess;
@@ -86,11 +87,5 @@ internal class PasswordFlow(
                 page.ViewModel.Items.Add(item);
             }
         });
-    }
-
-    private async Task<bool> IsLockedAsync()
-    {
-        var status = await api.GetStatusAsync();
-        return status?.Status != EBitwardenStatus.Unlocked;
     }
 }

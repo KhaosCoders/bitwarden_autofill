@@ -1,5 +1,4 @@
-﻿using Bitwarden_Autofill.API.Models;
-using Bitwarden_Autofill.Bitwarden.Model;
+﻿using Bitwarden_Autofill.Bitwarden.Model;
 
 namespace Bitwarden_Autofill.Bitwarden;
 

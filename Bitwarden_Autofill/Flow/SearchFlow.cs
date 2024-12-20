@@ -1,15 +1,15 @@
-﻿using Bitwarden_Autofill.API;
+﻿using Bitwarden_Autofill.Bitwarden;
 using Bitwarden_Autofill.View;
 using System.Threading;
 
 namespace Bitwarden_Autofill.Flow;
 
-internal class SearchFlow(UIDispatcher dispatcher, BitwardenApi api)
+internal class SearchFlow(UIDispatcher dispatcher, VaultSearch vaultSearch)
 {
     public async Task SearchAsync(string searchText, CancellationToken cancellationToken)
     {
         if (cancellationToken.IsCancellationRequested) return;
-        var foundItems = await api.FindItems(searchText);
+        var foundItems = await vaultSearch.FindItems(searchText);
 
         if (cancellationToken.IsCancellationRequested) return;
         dispatcher.ShowPage<SelectItemPage>(page =>

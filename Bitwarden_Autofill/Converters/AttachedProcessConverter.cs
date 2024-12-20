@@ -1,4 +1,4 @@
-﻿using Bitwarden_Autofill.API.Models;
+﻿using Bitwarden_Autofill.Bitwarden.Model;
 using Microsoft.UI.Xaml;
 using System;
 using System.Linq;

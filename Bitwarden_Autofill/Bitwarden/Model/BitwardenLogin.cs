@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Bitwarden_Autofill.API.Models;
+namespace Bitwarden_Autofill.Bitwarden.Model;
 
 public class BitwardenLogin
 {

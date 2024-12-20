@@ -1,5 +1,4 @@
-﻿using Bitwarden_Autofill.API;
-using Bitwarden_Autofill.Bitwarden;
+﻿using Bitwarden_Autofill.Bitwarden;
 using Bitwarden_Autofill.Flow;
 using Bitwarden_Autofill.Hotkey;
 using Bitwarden_Autofill.Options;
@@ -17,8 +16,6 @@ public partial class App
     {
         var services = new ServiceCollection();
 
-        services.AddSingleton<ClientFactory>();
-
         services.AddSingleton(DispatcherQueue.GetForCurrentThread());
         services.AddSingleton<UIDispatcher>();
 
@@ -33,8 +30,9 @@ public partial class App
         services.AddSingleton<BitwardenCli>();
         services.AddSingleton<CliAuth>();
         services.AddSingleton<CliConfigurator>();
+        services.AddSingleton<VaultLock>();
+        services.AddSingleton<VaultSearch>();
 
-        services.AddSingleton<BitwardenApi>();
         services.AddTransient<DownloadCliWindow>();
         services.AddTransient<MainWindow>();
         services.AddTransient<ErrorPage>();

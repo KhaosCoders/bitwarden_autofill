@@ -1,5 +1,4 @@
-﻿using Bitwarden_Autofill.API.Models;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
 
 namespace Bitwarden_Autofill.Bitwarden.Model;

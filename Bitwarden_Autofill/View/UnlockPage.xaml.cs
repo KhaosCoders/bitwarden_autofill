@@ -1,4 +1,4 @@
-using Bitwarden_Autofill.API;
+using Bitwarden_Autofill.Bitwarden;
 using Bitwarden_Autofill.Flow;
 using Bitwarden_Autofill.ViewModel;
 using Microsoft.UI.Xaml;
@@ -12,11 +12,11 @@ namespace Bitwarden_Autofill.View;
 /// </summary>
 internal sealed partial class UnlockPage : Page
 {
-    public UnlockPage(BitwardenApi api, UIDispatcher dispatcher, PasswordFlow flow)
+    public UnlockPage(UIDispatcher dispatcher, PasswordFlow flow, VaultLock vaultLock)
     {
-        _api = api;
         _dispatcher = dispatcher;
         _flow = flow;
+        _vaultLock = vaultLock;
 
         ViewModel = new();
         InitializeComponent();
@@ -24,9 +24,9 @@ internal sealed partial class UnlockPage : Page
         Loaded += OnLoaded;
     }
 
-    private readonly BitwardenApi _api;
     private readonly UIDispatcher _dispatcher;
     private readonly PasswordFlow _flow;
+    private readonly VaultLock _vaultLock;
 
     public UnlockViewModel ViewModel { get; set; }
 
@@ -45,7 +45,7 @@ internal sealed partial class UnlockPage : Page
     {
         _dispatcher.IndicateLoading();
 
-        if (!await _api.UnlockAsync(ViewModel.Password))
+        if (!await _vaultLock.UnlockAsync(ViewModel.Password))
         {
             _dispatcher.Dispatch(() => ViewModel.ErrorMessage = "Invalid password");
             _dispatcher.ShowPage(this);

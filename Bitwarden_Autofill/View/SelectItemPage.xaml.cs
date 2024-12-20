@@ -1,4 +1,3 @@
-using Bitwarden_Autofill.API.Models;
 using Bitwarden_Autofill.Flow;
 using Bitwarden_Autofill.Totp;
 using Bitwarden_Autofill.ViewModel;
@@ -9,6 +8,7 @@ using System.Threading;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Core;
 using Windows.System;
+using Bitwarden_Autofill.Bitwarden.Model;
 
 namespace Bitwarden_Autofill.View;
 
